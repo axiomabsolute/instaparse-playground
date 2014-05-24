@@ -57,6 +57,8 @@
        :NUMBER (fn [arg] (str arg))
        :ADD (fn [& args] (str "(+ " (clojure.string/join " " args) ")"))
        :PROGRAM (fn [& args] clojure.string/join "\n" args)
+       :OPINV (fn [arg1 op arg2] (str "(" op " " arg1 arg2 ")"))
+       :FNINV (fn [fname & args] (str "(" fname (clojure.string/join " " args)))
        })
 
     (def pythyTranspiler
@@ -108,5 +110,6 @@
     (pythyEvaler "println(12)\nprintln(13)")
     (println "\n\n\n")
     ;; Finally, convert a Clojurish program into Pythy!
+    (println (first (insta/transform clojurishTranspiler (pythyParser "println(12)\nprintln(13)"))))
   )
 )
